@@ -2,6 +2,7 @@
 .*.swp
 i3status
 man/i3status.1
+tags
 
 # We recommend building in a subdirectory called build.
 # If you chose a different directory name,
