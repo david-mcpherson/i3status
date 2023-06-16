@@ -37,6 +37,7 @@ Dependencies: meson and ninja
 git clone https://github.com/david-mcpherson/i3status
 cd i3status
 mkdir build
+cd build
 meson setup ..
 ninja
 sudo ninja install
