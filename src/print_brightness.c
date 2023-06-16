@@ -12,7 +12,7 @@
 #include <errno.h>
 #include "i3status.h"
 
-#define STRING_SIZE 10
+#define STRING_SIZE 11
 
 void print_brightness(brightness_ctx_t *ctx) {
     const char *walk = ctx->format;
@@ -35,7 +35,6 @@ void print_brightness(brightness_ctx_t *ctx) {
             max_brightness_buf[n] = '\0';
         }
         (void)close(max_fd);
-        START_COLOR("color_good");
     } else {
         walk = ctx->format_bad;
         START_COLOR("color_bad");
@@ -58,13 +57,25 @@ void print_brightness(brightness_ctx_t *ctx) {
     }
     *dst = '\0';
 
-    char string_errno[STRING_SIZE];
+    int brightness_percentage = (int)(100 * atof(actual_brightness_buf)/atof(max_brightness_buf));
+    char string_brightness_percent[STRING_SIZE];
+    sprintf(string_brightness_percent, "%d", brightness_percentage);
 
+    char brightness_bar[STRING_SIZE] = "----------";
+    int i;
+    for (i = 0; brightness_percentage >= 10; brightness_percentage -= 10) {
+        brightness_bar[i++] = '#';
+    }
+    brightness_bar[10] = '\0';
+
+    char string_errno[STRING_SIZE];
     sprintf(string_errno, "%d", errno);
 
     placeholder_t placeholders[] = {
         {.name = "%actual_brighntess", .value = actual_brightness_buf},
         {.name = "%max_brightness", .value = max_brightness_buf},
+        {.name = "%brightness_percent", .value = string_brightness_percent},
+        {.name = "%brightness_bar", .value = brightness_bar},
         {.name = "%errno", .value = string_errno},
         {.name = "%error", .value = strerror(errno)}};
 

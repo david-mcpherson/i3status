@@ -455,7 +455,8 @@ int main(int argc, char *argv[]) {
         CFG_END()};
 
     cfg_opt_t brightness_opts[] = {
-        CFG_STR("format", "Brightness: %actual_brighntess/%max_brightness", CFGF_NONE),
+        //CFG_STR("format", "Brightness: %actual_brighntess/%max_brightness (%brightness_percent%)", CFGF_NONE),
+        CFG_STR("format", "󰖨  %brightness_bar (%brightness_percent%)", CFGF_NONE),
         CFG_STR("format_bad", "<Brightness> %errno: %error", CFGF_NONE),
         CFG_STR("actual_brightness_path", "/sys/class/backlight/intel_backlight/actual_brightness", CFGF_NONE),
         CFG_STR("max_brightness_path", "/sys/class/backlight/intel_backlight/max_brightness", CFGF_NONE),
