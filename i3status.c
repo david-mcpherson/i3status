@@ -459,7 +459,7 @@ int main(int argc, char *argv[]) {
         CFG_STR("format_bad", "<Brightness> %errno: %error", CFGF_NONE),
         CFG_STR("actual_brightness_path", "/sys/class/backlight/intel_backlight/actual_brightness", CFGF_NONE),
         CFG_STR("max_brightness_path", "/sys/class/backlight/intel_backlight/max_brightness", CFGF_NONE),
-        CFG_INT("max_characters", 20, CFGF_NONE),
+        CFG_INT("max_characters", 10, CFGF_NONE),
         CFG_CUSTOM_ALIGN_OPT,
         CFG_CUSTOM_COLOR_OPTS,
         CFG_CUSTOM_MIN_WIDTH_OPT,
@@ -486,8 +486,7 @@ int main(int argc, char *argv[]) {
         CFG_SEC("memory", memory_opts, CFGF_NONE),
         CFG_SEC("cpu_usage", usage_opts, CFGF_NONE),
         CFG_SEC("read_file", read_opts, CFGF_TITLE | CFGF_MULTI),
-        CFG_SEC("brightness", brightness_opts, CFGF_TITLE | CFGF_MULTI),
-        //CFG_SEC("brightness", brightness_opts, CFGF_NONE),
+        CFG_SEC("brightness", brightness_opts, CFGF_NONE),
         CFG_END()};
 
     char *configfile = NULL;
@@ -961,7 +960,7 @@ int main(int argc, char *argv[]) {
                 SEC_CLOSE_MAP;
             }
 
-            CASE_SEC_TITLE("brightness") {
+            CASE_SEC("brightness") {
                 SEC_OPEN_MAP("brightness");
                 brightness_ctx_t ctx = {
                     .json_gen = json_gen,
