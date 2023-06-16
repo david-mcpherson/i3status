@@ -172,6 +172,7 @@ i3status_srcs = [
   'src/print_wireless_info.c',
   'src/print_file_contents.c',
   'src/process_runs.c',
+  'src/print_brightness.c',
 ]
 
 thread_dep = dependency('threads')

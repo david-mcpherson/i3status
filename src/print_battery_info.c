@@ -687,9 +687,9 @@ void print_battery_info(battery_info_ctx_t *ctx) {
         minutes = seconds / 60;
         seconds -= (minutes * 60);
         if (ctx->hide_seconds)
-            snprintf(string_remaining, STRING_SIZE, "%02d:%02d", max(hours, 0), max(minutes, 0));
+            snprintf(string_remaining, STRING_SIZE, "%hu:%hu", max(hours, 0), max(minutes, 0));
         else
-            snprintf(string_remaining, STRING_SIZE, "%02d:%02d:%02d", max(hours, 0), max(minutes, 0), max(seconds, 0));
+            snprintf(string_remaining, STRING_SIZE, "%hu:%hu:%hu", max(hours, 0), max(minutes, 0), max(seconds, 0));
     }
 
     if (batt_info.seconds_remaining >= 0) {
@@ -697,9 +697,9 @@ void print_battery_info(battery_info_ctx_t *ctx) {
         set_timezone(NULL); /* Use local time. */
         struct tm *empty_tm = localtime(&empty_time);
         if (ctx->hide_seconds)
-            snprintf(string_emptytime, STRING_SIZE, "%02d:%02d", max(empty_tm->tm_hour, 0), max(empty_tm->tm_min, 0));
+            snprintf(string_emptytime, STRING_SIZE, "%hu:%hu", max(empty_tm->tm_hour, 0), max(empty_tm->tm_min, 0));
         else
-            snprintf(string_emptytime, STRING_SIZE, "%02d:%02d:%02d", max(empty_tm->tm_hour, 0), max(empty_tm->tm_min, 0), max(empty_tm->tm_sec, 0));
+            snprintf(string_emptytime, STRING_SIZE, "%hu:%hu:%hu", max(empty_tm->tm_hour, 0), max(empty_tm->tm_min, 0), max(empty_tm->tm_sec, 0));
     }
 
     if (batt_info.present_rate >= 0)
