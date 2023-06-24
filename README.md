@@ -2,43 +2,58 @@
 
 ## Description
 
-i3status is a small program for generating a status bar for i3bar, dzen2, xmobar
-or similar programs. It is designed to be very efficient by issuing a very small
-number of system calls, as one generally wants to update such a status line
-every second. This ensures that even under high load, your status bar is updated
-correctly. Also, it saves a bit of energy by not hogging your CPU as much as
-spawning the corresponding amount of shell commands would.
+This fork of i3status has a brightness module.
+It works by reading the brightness files in /sys/class/backlight.
 
-## Development
+![Alt text](/images/brightness.png "Brightness module demo")
 
-i3status has the following dependencies:
-  * libconfuse-dev
-  * libyajl-dev
-  * libasound2-dev
-  * libnl-genl-3-dev
-  * meson (compile-time only dependency)
-  * asciidoc (only for the documentation)
-  * libpulse-dev (for getting the current volume using PulseAudio)
 
-On debian-based systems, the following line will install all requirements:
-```bash
-apt-get install autoconf libconfuse-dev libyajl-dev libasound2-dev libiw-dev asciidoc libpulse-dev libnl-genl-3-dev meson
+## Usage
+
+Simply add `order += brightness` to your i3status config file.
+
+You may need to configure the paths to the files that store brightness data:
+
+```
+brightness {
+    "actual_brightness_path", "/sys/class/backlight/intel_backlight/actual_brightness"
+    "max_brightness_path", "/sys/class/backlight/intel_backlight/max_brightness"
+}
 ```
 
-## Upstream
+You may also wish to edit the format options
 
-i3status is developed at https://github.com/i3/i3status
-
-## Compilation
-
-Prefer installing i3status via your Linux distribution’s package manager.
-
-If you absolutely have to build from source, use:
-
-```bash
-  mkdir build
-  cd build
-  meson ..
-  ninja
-  sudo ninja install
+``` 
+brightness {
+    format = " 󰖨 %brightness_bar [%brightness_percentage] (%actual_brightness/%max_brightness) "
+    format_down = "UNKNOWN BRIGHTNESS"
+}
 ```
+
+## Installation 
+
+Dependencies: meson and ninja 
+```
+git clone https://github.com/david-mcpherson/i3status
+cd i3status
+mkdir build
+cd build
+meson setup ..
+ninja
+sudo ninja install
+```
+This installs to `/usr/local/bin/i3status`.
+
+You can now delete the cloned i3status repository.
+
+You'll need to tell i3 to use this forked status program.
+
+Include something like this in your i3 config:
+
+```
+bar {
+    i3bar_command i3bar -t
+    status_command /usr/local/bin/i3status
+}
+```
+
